@@ -1,0 +1,49 @@
+name: Feature request
+description: Suggest a product or workflow improvement.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should be added or changed?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Product area
+      options:
+        - Analyse
+        - Discover
+        - Watchlist
+        - Portfolio
+        - Alerts
+        - Compare
+        - Events
+        - Validate
+        - Auth
+        - Privacy
+        - Infrastructure
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: |
+        - ...
+        - ...
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes or examples

@@ -16,6 +16,48 @@ For every meaningful code or product change, add a new entry with:
 - Verification performed
 - Follow-up notes, if any
 
+## 2026-05-02 - Repository Documentation Template
+
+### Summary
+
+Added a structured repository template so the GitHub repo is easier to understand, maintain, and contribute to. The update includes a full README, contribution guide, security policy, architecture/deployment/operations/roadmap docs, GitHub issue templates, a pull request template, CI workflow, and Dependabot configuration.
+
+### Why
+
+The app now has enough capability and release history that the repository needs a clear public-facing structure: how to run it, how to verify it, how to report data gaps, how to handle security, and how future changes should be reviewed.
+
+### Key Files Touched
+
+- `README.md`
+- `CONTRIBUTING.md`
+- `SECURITY.md`
+- `docs/ARCHITECTURE.md`
+- `docs/DEPLOYMENT.md`
+- `docs/OPERATIONS.md`
+- `docs/ROADMAP.md`
+- `.github/PULL_REQUEST_TEMPLATE.md`
+- `.github/ISSUE_TEMPLATE/bug_report.yml`
+- `.github/ISSUE_TEMPLATE/feature_request.yml`
+- `.github/ISSUE_TEMPLATE/data_source_gap.yml`
+- `.github/ISSUE_TEMPLATE/security_hardening.yml`
+- `.github/ISSUE_TEMPLATE/config.yml`
+- `.github/workflows/ci.yml`
+- `.github/dependabot.yml`
+- `CHANGE_HISTORY.md`
+
+### Verification
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm test`
+- Secret-pattern scan over committed files showed no local certs, keys, tokens, or environment secrets.
+- `git diff --check`
+
+### Follow-Up
+
+- Consider adding a license only after the desired distribution model is clear.
+- Add repository topics and branch protection rules in GitHub settings.
+
 ## 2026-05-02 - Version 2.4.0 Hosted Worker Readiness
 
 ### Summary

@@ -1,0 +1,42 @@
+name: Security hardening
+description: Track non-sensitive security improvements.
+title: "[Security]: "
+labels: ["security"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not disclose exploitable vulnerabilities or secrets in public issues. Use a private channel for sensitive reports.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What should be hardened?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Headers/CSP
+        - API mutation protection
+        - Auth/session
+        - Workspace storage
+        - GDPR controls
+        - Hosted worker
+        - Dependencies
+        - Deployment
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: This issue does not include secrets or active exploit details.
+          required: true

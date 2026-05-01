@@ -1,0 +1,56 @@
+name: Data source gap
+description: Report missing, stale, incorrect, or unverifiable market data.
+title: "[Data]: "
+labels: ["data-quality"]
+body:
+  - type: input
+    id: ticker
+    attributes:
+      label: Ticker or company
+      placeholder: DBK.DE / Deutsche Bank
+    validations:
+      required: true
+  - type: input
+    id: region
+    attributes:
+      label: Region
+      placeholder: Europe
+    validations:
+      required: true
+  - type: dropdown
+    id: metric
+    attributes:
+      label: Affected metric
+      options:
+        - History/OHLCV
+        - Latest close
+        - 52-week high/low
+        - Volume
+        - Market cap
+        - P/E
+        - Sector/industry
+        - Peers
+        - Earnings date
+        - Source record
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed result
+      description: What did Stock Analyser show?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected or reference result
+      description: Include public source URLs when possible.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I included public-source URLs where possible.
+        - label: I understand unavailable data should remain `Data unavailable` if it cannot be verified.

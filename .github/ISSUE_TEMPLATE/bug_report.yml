@@ -1,0 +1,52 @@
+name: Bug report
+description: Report a reproducible problem in Stock Analyser.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What went wrong?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Enter ...
+        3. Click ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: input
+    id: ticker
+    attributes:
+      label: Ticker or company
+      description: If relevant, include the ticker/company and region.
+      placeholder: AAPL / USA
+  - type: textarea
+    id: logs
+    attributes:
+      label: Errors, warnings, screenshots
+      description: Paste relevant non-sensitive logs or attach screenshots.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I did not include secrets, certificates, or local workspace data.
+          required: true
