@@ -1,0 +1,13 @@
+.next/
+node_modules/
+.cache/
+.certs/
+.stock-analyser-data/
+coverage/
+test-results/
+playwright-report/
+.env
+.env.*
+.srl
+*.tsbuildinfo
+*.log
