@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { alertTriggered, buildAlertSchedulerStatus, isRuleDue, nextEvaluationAt } from "../src/lib/alert-engine";
-import type { AlertRule } from "../src/lib/types";
+import {
+  alertMetricLabel,
+  alertTriggered,
+  buildAlertSchedulerStatus,
+  isRuleDue,
+  metricValue,
+  nextEvaluationAt
+} from "../src/lib/alert-engine";
+import type { AlertRule, HistoryMetrics } from "../src/lib/types";
 
 const baseDate = "2026-05-01T10:00:00.000Z";
 
@@ -24,6 +31,30 @@ function rule(overrides: Partial<AlertRule> = {}): AlertRule {
 }
 
 describe("alert engine", () => {
+  it("extracts alert metric values and labels", () => {
+    const metrics: HistoryMetrics = {
+      latestClose: 101,
+      high52Week: 150,
+      low52Week: 90,
+      percentFromLow: 12.2,
+      averageVolume: 500_000,
+      performance5D: 4.5,
+      ma20: 100,
+      ma50: 98,
+      ma200: 95,
+      rsi14: 61,
+      roc14: 6,
+      roc21: 8
+    };
+
+    expect(metricValue("price", metrics)).toBe(101);
+    expect(metricValue("rsi14", metrics)).toBe(61);
+    expect(metricValue("percentFromLow", metrics)).toBe(12.2);
+    expect(metricValue("performance5D", metrics)).toBe(4.5);
+    expect(alertMetricLabel("price")).toBe("latest close");
+    expect(alertMetricLabel("rsi14")).toBe("RSI 14D");
+  });
+
   it("calculates next evaluation timestamps by schedule", () => {
     const from = new Date(baseDate);
     expect(nextEvaluationAt({ schedule: "hourly" }, from)).toBe("2026-05-01T11:00:00.000Z");
@@ -76,5 +107,19 @@ describe("alert engine", () => {
     expect(status.dueRules).toBe(1);
     expect(status.lastRunAt).toBe("2026-05-01T09:00:00.000Z");
     expect(status.nextRunAt).toBe("2026-05-01T09:00:00.000Z");
+  });
+
+  it("reports an idle scheduler when no scheduled rules exist", () => {
+    const status = buildAlertSchedulerStatus({
+      rules: [rule({ schedule: "manual", nextEvaluationAt: null })],
+      events: [],
+      notifications: [],
+      schedulerRuns: []
+    });
+
+    expect(status.enabled).toBe(false);
+    expect(status.dueRules).toBe(0);
+    expect(status.nextRunAt).toBeNull();
+    expect(status.detail).toContain("No scheduled alert rules");
   });
 });

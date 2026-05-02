@@ -16,6 +16,50 @@ For every meaningful code or product change, add a new entry with:
 - Verification performed
 - Follow-up notes, if any
 
+## 2026-05-02 - Version 2.6.0 QA and System Guide
+
+### Summary
+
+Added a comprehensive QA hardening release. The app now has a System workspace with an embedded guide, repo-level user guide documentation, a formal test report, broader unit coverage, broader Playwright workflow coverage, and improved form accessibility for key controls.
+
+### Why
+
+The user requested thorough tests for functions and buttons, a report of issues and corrections, and a comprehensive user-friendly guide under System. This release turns that into a durable app section and repeatable verification suite instead of a one-off manual check.
+
+### Key Files Touched
+
+- `src/components/StockAnalyser.tsx`
+- `src/lib/version.ts`
+- `app/globals.css`
+- `e2e/app.spec.ts`
+- `tests/api-validation.test.ts`
+- `tests/alert-engine.test.ts`
+- `tests/format.test.ts`
+- `tests/indicators.test.ts`
+- `tests/recommendation.test.ts`
+- `tests/symbol-meta.test.ts`
+- `docs/USER_GUIDE.md`
+- `docs/TEST_REPORT.md`
+- `docs/ROADMAP.md`
+- `README.md`
+- `VERSION_HISTORY.md`
+- `CHANGE_HISTORY.md`
+
+### Verification
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm test` - 14 files, 61 tests passed
+- `npm run build` - passed with the known non-fatal Turbopack NFT tracing warning for local filesystem workspace storage
+- `npm run test:e2e` - 14 tests passed across desktop and mobile projects
+- `npm audit --audit-level=moderate` - 0 vulnerabilities
+- In-app browser QA: confirmed System entry, System guide render, 11 workspace nav buttons, and accessible Alerts Schedule control
+
+### Follow-Up
+
+- Resolve the Turbopack NFT tracing warning when replacing or statically scoping local filesystem workspace storage for hosted production.
+- Continue expanding live-data integration tests once stable public-source fixtures or recorded provider responses are available.
+
 ## 2026-05-02 - Version 2.5.0 Cloud Database Foundation
 
 ### Summary

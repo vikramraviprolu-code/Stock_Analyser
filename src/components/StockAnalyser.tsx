@@ -49,7 +49,7 @@ const TABS = [
 ] as const;
 
 type Tab = (typeof TABS)[number];
-type WorkspaceView = "Analyse" | "Discover" | "Watchlist" | "Portfolio" | "Alerts" | "Compare" | "Events" | "Validate" | "Auth" | "Privacy";
+type WorkspaceView = "Analyse" | "Discover" | "Watchlist" | "Portfolio" | "Alerts" | "Compare" | "Events" | "Validate" | "System" | "Auth" | "Privacy";
 type ScreenerViewMode = "table" | "charts";
 type ChartMode = "line" | "candles";
 type ChartRange = "1M" | "3M" | "6M" | "1Y";
@@ -1811,29 +1811,29 @@ function PortfolioPanel({
         <div className="portfolio-form">
           <div className="field-group">
             <label>Ticker</label>
-            <input value={form.ticker} onChange={(event) => onFormChange({ ...form, ticker: event.target.value })} placeholder="AAPL" />
+            <input aria-label="Ticker" value={form.ticker} onChange={(event) => onFormChange({ ...form, ticker: event.target.value })} placeholder="AAPL" />
           </div>
           <div className="field-group">
             <label>Region</label>
-            <select value={form.region} onChange={(event) => onFormChange({ ...form, region: event.target.value as Region })}>
+            <select aria-label="Region" value={form.region} onChange={(event) => onFormChange({ ...form, region: event.target.value as Region })}>
               {REGIONS.map((item) => <option key={item} value={item}>{item}</option>)}
             </select>
           </div>
           <div className="field-group">
             <label>Quantity</label>
-            <input value={form.quantity} onChange={(event) => onFormChange({ ...form, quantity: event.target.value })} inputMode="decimal" placeholder="10" />
+            <input aria-label="Quantity" value={form.quantity} onChange={(event) => onFormChange({ ...form, quantity: event.target.value })} inputMode="decimal" placeholder="10" />
           </div>
           <div className="field-group">
             <label>Avg cost</label>
-            <input value={form.averageCost} onChange={(event) => onFormChange({ ...form, averageCost: event.target.value })} inputMode="decimal" placeholder="125.50" />
+            <input aria-label="Avg cost" value={form.averageCost} onChange={(event) => onFormChange({ ...form, averageCost: event.target.value })} inputMode="decimal" placeholder="125.50" />
           </div>
           <div className="field-group">
             <label>Currency</label>
-            <input value={form.currency} onChange={(event) => onFormChange({ ...form, currency: event.target.value })} placeholder="Auto" />
+            <input aria-label="Currency" value={form.currency} onChange={(event) => onFormChange({ ...form, currency: event.target.value })} placeholder="Auto" />
           </div>
           <div className="field-group">
             <label>Notes</label>
-            <input value={form.notes} onChange={(event) => onFormChange({ ...form, notes: event.target.value })} placeholder="Optional" />
+            <input aria-label="Notes" value={form.notes} onChange={(event) => onFormChange({ ...form, notes: event.target.value })} placeholder="Optional" />
           </div>
           <button type="button" onClick={onSubmit} disabled={loading}>Add Holding</button>
         </div>
@@ -1943,17 +1943,17 @@ function AlertsPanel({
         <div className="portfolio-form">
           <div className="field-group">
             <label>Ticker</label>
-            <input value={form.ticker} onChange={(event) => onFormChange({ ...form, ticker: event.target.value })} placeholder="AAPL" />
+            <input aria-label="Ticker" value={form.ticker} onChange={(event) => onFormChange({ ...form, ticker: event.target.value })} placeholder="AAPL" />
           </div>
           <div className="field-group">
             <label>Region</label>
-            <select value={form.region} onChange={(event) => onFormChange({ ...form, region: event.target.value as Region })}>
+            <select aria-label="Region" value={form.region} onChange={(event) => onFormChange({ ...form, region: event.target.value as Region })}>
               {REGIONS.map((item) => <option key={item} value={item}>{item}</option>)}
             </select>
           </div>
           <div className="field-group">
             <label>Metric</label>
-            <select value={form.metric} onChange={(event) => onFormChange({ ...form, metric: event.target.value as AlertMetric })}>
+            <select aria-label="Metric" value={form.metric} onChange={(event) => onFormChange({ ...form, metric: event.target.value as AlertMetric })}>
               {(["price", "rsi14", "percentFromLow", "performance5D"] as AlertMetric[]).map((item) => (
                 <option key={item} value={item}>{alertMetricLabel(item)}</option>
               ))}
@@ -1961,18 +1961,18 @@ function AlertsPanel({
           </div>
           <div className="field-group">
             <label>Condition</label>
-            <select value={form.operator} onChange={(event) => onFormChange({ ...form, operator: event.target.value as AlertOperator })}>
+            <select aria-label="Condition" value={form.operator} onChange={(event) => onFormChange({ ...form, operator: event.target.value as AlertOperator })}>
               <option value="above">Above</option>
               <option value="below">Below</option>
             </select>
           </div>
           <div className="field-group">
             <label>Threshold</label>
-            <input value={form.threshold} onChange={(event) => onFormChange({ ...form, threshold: event.target.value })} inputMode="decimal" placeholder="70" />
+            <input aria-label="Threshold" value={form.threshold} onChange={(event) => onFormChange({ ...form, threshold: event.target.value })} inputMode="decimal" placeholder="70" />
           </div>
           <div className="field-group">
             <label>Schedule</label>
-            <select value={form.schedule} onChange={(event) => onFormChange({ ...form, schedule: event.target.value as AlertSchedule })}>
+            <select aria-label="Schedule" value={form.schedule} onChange={(event) => onFormChange({ ...form, schedule: event.target.value as AlertSchedule })}>
               <option value="hourly">Hourly</option>
               <option value="daily">Daily</option>
               <option value="manual">Manual</option>
@@ -2283,7 +2283,7 @@ function PrivacyPanel({
         <div className="saved-screen-row">
           <div className="field-group">
             <label>Confirmation</label>
-            <input value={deleteConfirm} onChange={(event) => onDeleteConfirmChange(event.target.value)} placeholder="DELETE" />
+            <input aria-label="Confirmation" value={deleteConfirm} onChange={(event) => onDeleteConfirmChange(event.target.value)} placeholder="DELETE" />
           </div>
           <button type="button" className="secondary" onClick={onDelete} disabled={loading || deleteConfirm !== "DELETE"}>
             Delete Workspace
@@ -2374,6 +2374,7 @@ function AuthPanel({
             <div className="field-group">
               <label>Username</label>
               <input
+                aria-label="Username"
                 value={form.username}
                 onChange={(event) => onFormChange({ ...form, username: event.target.value })}
                 autoComplete="username"
@@ -2383,6 +2384,7 @@ function AuthPanel({
             <div className="field-group">
               <label>Passphrase</label>
               <input
+                aria-label="Passphrase"
                 value={form.passphrase}
                 onChange={(event) => onFormChange({ ...form, passphrase: event.target.value })}
                 type="password"
@@ -2441,7 +2443,7 @@ function AuthPanel({
           <div className="saved-screen-row">
             <div className="field-group">
               <label>Confirmation</label>
-              <input value={deleteConfirm} onChange={(event) => onDeleteConfirmChange(event.target.value)} placeholder="DELETE" />
+              <input aria-label="Confirmation" value={deleteConfirm} onChange={(event) => onDeleteConfirmChange(event.target.value)} placeholder="DELETE" />
             </div>
             <button type="button" className="secondary" onClick={onDeleteAccount} disabled={loading || deleteConfirm !== "DELETE"}>
               Delete Account
@@ -2449,6 +2451,168 @@ function AuthPanel({
           </div>
         </section>
       ) : null}
+    </div>
+  );
+}
+
+function SystemPanel({
+  readiness,
+  loading,
+  error,
+  onRefresh
+}: {
+  readiness: DeploymentReadinessResponse | null;
+  loading: boolean;
+  error: string | null;
+  onRefresh: () => void;
+}) {
+  const cloudSync = readiness?.cloudSync;
+  const hostedWorker = readiness?.hostedWorker;
+
+  const workflowSteps = [
+    {
+      title: "Analyse a stock",
+      detail: "Enter a ticker or company name, choose the best match, let the app infer region, then open Overview, Value Screen, Momentum, Recommendation, Data Quality, and Sources."
+    },
+    {
+      title: "Discover candidates",
+      detail: "Use the screener presets, adjust filters, save useful screens, and open strong candidates for deeper analysis."
+    },
+    {
+      title: "Track watchlists and portfolios",
+      detail: "Add analysed or screened names to watchlists, add holdings with quantity and cost, then refresh prices from public-source data."
+    },
+    {
+      title: "Monitor alerts",
+      detail: "Create price, RSI, 52-week range, or 5D performance alerts. Scheduled checks run while the app page remains active."
+    },
+    {
+      title: "Validate data quality",
+      detail: "Use Validation and Sources to see which metrics were verified, which source supplied each value, and where Data unavailable is shown."
+    },
+    {
+      title: "Control privacy",
+      detail: "Use Account and Privacy to manage the local workspace, export data, inspect audit evidence, and delete workspace data."
+    }
+  ];
+
+  const trustRules = [
+    "No paid APIs are required for the local build.",
+    "Mock demo mode is disabled; the app does not mix mock and live data.",
+    "Unverified metrics must remain labelled Data unavailable.",
+    "Recommendation scoring is informational and should be cross-checked independently.",
+    "Workspace data is stored locally unless cloud sync is explicitly configured."
+  ];
+
+  return (
+    <div className="panel-stack">
+      <section className="content-band">
+        <div className="section-heading">
+          <div>
+            <span>Operating guide</span>
+            <h2>System Guide</h2>
+          </div>
+          <button type="button" onClick={onRefresh} disabled={loading}>
+            {loading ? "Refreshing..." : "Refresh System Status"}
+          </button>
+        </div>
+        <p className="source-note">
+          This guide is built into the app so a new user can understand the workflow, data trust rules, and operational status without leaving the workstation.
+        </p>
+        {error ? <p className="error-copy">{error}</p> : null}
+      </section>
+
+      <div className="metric-grid four">
+        <MetricCard label="Version" value={`v${APP_VERSION}`} subvalue={APP_CODENAME} />
+        <MetricCard label="Data mode" value="Live only" subvalue="Unavailable values stay explicit" />
+        <MetricCard label="Cloud sync" value={cloudSync?.configured ? "Configured" : "Local adapter"} subvalue={cloudSync?.detail ?? "Run refresh to check readiness"} />
+        <MetricCard label="Hosted worker" value={hostedWorker?.configured ? "Configured" : "Not configured"} subvalue={hostedWorker?.detail ?? "Worker status unavailable"} />
+      </div>
+
+      <section className="content-band">
+        <div className="section-heading">
+          <div>
+            <span>Daily workflow</span>
+            <h2>How to Use the App</h2>
+          </div>
+        </div>
+        <div className="info-grid system-guide-grid">
+          {workflowSteps.map((step) => (
+            <p key={step.title}>
+              <strong>{step.title}</strong>
+              {step.detail}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      <section className="content-band">
+        <div className="section-heading">
+          <div>
+            <span>Trust model</span>
+            <h2>Data and Recommendation Rules</h2>
+          </div>
+          <span className={badgeClass(readiness?.status.status ?? "warning")}>{readiness?.status.status ?? "Pending"}</span>
+        </div>
+        <div className="info-grid">
+          {trustRules.map((rule) => (
+            <p key={rule}>
+              <strong>Rule</strong>
+              {rule}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      <section className="content-band">
+        <div className="section-heading">
+          <div>
+            <span>System status</span>
+            <h2>Readiness Checklist</h2>
+          </div>
+        </div>
+        <div className="metric-grid four">
+          <MetricCard label="CSP" value={readiness?.security.cspEnabled ? "Enabled" : DATA_UNAVAILABLE} />
+          <MetricCard label="CSRF protection" value={readiness?.security.csrfProtection ? "Enabled" : DATA_UNAVAILABLE} />
+          <MetricCard label="Rate limiting" value={readiness?.security.rateLimiting ? "Enabled" : DATA_UNAVAILABLE} />
+          <MetricCard label="GDPR controls" value={readiness?.gdpr.exportEnabled && readiness.gdpr.deleteEnabled ? "Enabled" : DATA_UNAVAILABLE} subvalue="Export and erasure controls" />
+        </div>
+        {readiness?.warnings.length ? (
+          <div className="info-grid system-warning-grid">
+            {readiness.warnings.map((warning) => (
+              <p key={warning}>
+                <strong>Readiness gap</strong>
+                {warning}
+              </p>
+            ))}
+          </div>
+        ) : (
+          <p className="empty-state">Refresh system status to load deployment readiness evidence.</p>
+        )}
+      </section>
+
+      <section className="content-band">
+        <div className="section-heading">
+          <div>
+            <span>Reference</span>
+            <h2>Repo Documentation</h2>
+          </div>
+        </div>
+        <div className="info-grid">
+          <p>
+            <strong>User guide</strong>
+            See docs/USER_GUIDE.md for a complete step-by-step guide.
+          </p>
+          <p>
+            <strong>Test report</strong>
+            See docs/TEST_REPORT.md for the latest QA scope, issues found, and verification results.
+          </p>
+          <p>
+            <strong>Operations</strong>
+            See docs/OPERATIONS.md and docs/DEPLOYMENT.md before running this beyond the local workstation.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }
@@ -3329,6 +3493,10 @@ function LandingPage({ onOpen }: { onOpen: (view: WorkspaceView, options?: OpenW
       title: "Validate"
     },
     {
+      view: "System",
+      title: "System"
+    },
+    {
       view: "Auth",
       title: "Account"
     },
@@ -3363,6 +3531,9 @@ function LandingPage({ onOpen }: { onOpen: (view: WorkspaceView, options?: OpenW
           <button type="button" className="secondary" onClick={() => onOpen("Alerts")}>
             Alerts
           </button>
+          <button type="button" className="secondary" onClick={() => onOpen("System")}>
+            System
+          </button>
         </div>
       </nav>
 
@@ -3391,6 +3562,9 @@ function LandingPage({ onOpen }: { onOpen: (view: WorkspaceView, options?: OpenW
           </button>
           <button type="button" className="text-button" onClick={() => onOpen("Validate")}>
             Validate coverage
+          </button>
+          <button type="button" className="text-button" onClick={() => onOpen("System")}>
+            Open guide
           </button>
         </div>
       </div>
@@ -4308,7 +4482,7 @@ export function StockAnalyser({
     if (workspaceView === "Alerts" && !alertsResponse && !alertsLoading) {
       void loadAlerts(false);
     }
-    if (workspaceView === "Privacy" && (!workspaceExport || !deploymentReadiness) && !privacyLoading) {
+    if ((workspaceView === "Privacy" || workspaceView === "System") && (!workspaceExport || !deploymentReadiness) && !privacyLoading) {
       void loadWorkspaceExport();
     }
   }, [workspaceView, portfolioResponse, portfolioLoading, alertsResponse, alertsLoading, workspaceExport, deploymentReadiness, privacyLoading]);
@@ -4411,7 +4585,7 @@ export function StockAnalyser({
         />
 
         <nav className="product-nav" aria-label="Stock Analyser workspace">
-          {(["Analyse", "Discover", "Watchlist", "Portfolio", "Alerts", "Compare", "Events", "Validate", "Auth", "Privacy"] as WorkspaceView[]).map((view) => (
+          {(["Analyse", "Discover", "Watchlist", "Portfolio", "Alerts", "Compare", "Events", "Validate", "System", "Auth", "Privacy"] as WorkspaceView[]).map((view) => (
             <button
               key={view}
               type="button"
@@ -4739,6 +4913,15 @@ export function StockAnalyser({
             error={validationError}
             onScopeChange={setValidationScope}
             onRun={(refresh) => void runValidation(refresh)}
+          />
+        ) : null}
+
+        {workspaceView === "System" ? (
+          <SystemPanel
+            readiness={deploymentReadiness}
+            loading={privacyLoading}
+            error={privacyError}
+            onRefresh={() => void loadWorkspaceExport()}
           />
         ) : null}
       </section>

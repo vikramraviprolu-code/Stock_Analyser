@@ -8,8 +8,8 @@ The app uses free public sources, keeps unavailable metrics explicit as `Data un
 
 ## Current Version
 
-- App version: `2.5.0`
-- Codename: `Cloud Database Foundation`
+- App version: `2.6.0`
+- Codename: `QA and System Guide`
 - Release log: [VERSION_HISTORY.md](VERSION_HISTORY.md)
 - Implementation log: [CHANGE_HISTORY.md](CHANGE_HISTORY.md)
 
@@ -24,6 +24,7 @@ The app uses free public sources, keeps unavailable metrics explicit as `Data un
 - Watchlist, portfolio, alerts, comparison, events, validation, account, and privacy workspaces.
 - Local encrypted workspace storage, local account isolation, GDPR export/delete controls, audit history, and consent history.
 - Page-active scheduled alerts plus a protected hosted-worker endpoint ready for external scheduler wiring.
+- Built-in System guide, repo user guide, and QA test report.
 
 ## Quick Start
 
@@ -86,6 +87,8 @@ docs/                    Architecture, deployment, operations, and roadmap docs
 - [Deployment](docs/DEPLOYMENT.md)
 - [Operations](docs/OPERATIONS.md)
 - [Roadmap](docs/ROADMAP.md)
+- [User Guide](docs/USER_GUIDE.md)
+- [Test Report](docs/TEST_REPORT.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
 

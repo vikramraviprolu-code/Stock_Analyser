@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { parseBooleanFlag, parseRegionParam, parseTickerList, parseTickerQuery, parseValidationScope } from "../src/lib/api-validation";
+import {
+  parseBooleanFlag,
+  parseRegionParam,
+  parseRegionSet,
+  parseTickerList,
+  parseTickerQuery,
+  parseValidationScope
+} from "../src/lib/api-validation";
 
 describe("api validation", () => {
   it("accepts valid ticker or company queries", () => {
@@ -19,8 +26,21 @@ describe("api validation", () => {
 
   it("validates enum-style params", () => {
     expect(parseRegionParam("USA", "AAPL").ok).toBe(true);
+    expect(parseRegionParam(null, "RELIANCE.NS")).toEqual({ ok: true, value: "India" });
     expect(parseRegionParam("Mars", "AAPL").ok).toBe(false);
     expect(parseValidationScope("universe")).toEqual({ ok: true, value: "universe" });
+    expect(parseValidationScope("invalid").ok).toBe(false);
+  });
+
+  it("parses optional region sets", () => {
+    expect(parseRegionSet(null)).toEqual({ ok: true, value: null });
+    expect(parseRegionSet("All")).toEqual({ ok: true, value: null });
+    const parsed = parseRegionSet("USA, Europe");
+    expect(parsed.ok).toBe(true);
+    if (parsed.ok) {
+      expect(Array.from(parsed.value ?? [])).toEqual(["USA", "Europe"]);
+    }
+    expect(parseRegionSet("USA, Mars").ok).toBe(false);
   });
 
   it("caps ticker list size", () => {

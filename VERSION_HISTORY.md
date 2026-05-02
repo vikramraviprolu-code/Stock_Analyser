@@ -4,6 +4,16 @@ This file is the durable project memory for product/version changes. Update it w
 
 For implementation-level details, files touched, rationale, and verification notes, maintain `CHANGE_HISTORY.md`.
 
+## 2.6.0 - QA and System Guide - 2026-05-02
+
+- Added a System workspace with an in-app user guide, trust rules, deployment readiness cards, security/GDPR checklist, and repo documentation pointers.
+- Added `docs/USER_GUIDE.md` as a comprehensive user-friendly operating guide.
+- Added `docs/TEST_REPORT.md` covering automated test scope, browser checks, issues found, fixes, commands, and residual risks.
+- Expanded unit coverage for formatting helpers, symbol metadata helpers, indicator edge cases, alert metric helpers, API validation, and recommendation helper labels.
+- Expanded Playwright e2e coverage across landing actions, all workspace navigation buttons, key form controls, safe validation errors, mobile overflow, and system API smoke checks.
+- Fixed form accessibility gaps by adding programmatic labels for Portfolio, Alerts, Auth, and Privacy controls.
+- Verified with typecheck, lint, unit tests, production build, Playwright e2e, dependency audit, and in-app browser QA.
+
 ## 2.5.0 - Cloud Database Foundation - 2026-05-02
 
 - Added cloud workspace readiness validation with PostgreSQL URL detection, required env checks, schema versioning, and sanitized database URL reporting.

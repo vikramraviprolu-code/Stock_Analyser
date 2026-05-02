@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { buildRecommendation, momentumSignal, scoreDataQuality, scoreValueScreen } from "../src/lib/recommendation";
+import {
+  buildRecommendation,
+  momentumSignal,
+  priceVsMovingAverage,
+  rsiLabel,
+  scoreDataQuality,
+  scoreMomentum,
+  scoreValueScreen
+} from "../src/lib/recommendation";
 import { evaluateRegionalFilters } from "../src/lib/regions";
 import type { HistoryMetrics, SourceRecord } from "../src/lib/types";
 
@@ -45,6 +53,20 @@ function sources(values: string[]): SourceRecord[] {
 }
 
 describe("recommendation scoring", () => {
+  it("labels RSI and price-vs-moving-average states", () => {
+    expect(rsiLabel(null)).toBe("Data unavailable");
+    expect(rsiLabel(75)).toBe("Overbought");
+    expect(rsiLabel(25)).toBe("Oversold");
+    expect(rsiLabel(60)).toBe("Positive");
+    expect(rsiLabel(40)).toBe("Weak");
+    expect(rsiLabel(50)).toBe("Neutral");
+
+    expect(priceVsMovingAverage(101, 100)).toBe("Above");
+    expect(priceVsMovingAverage(99, 100)).toBe("Below");
+    expect(priceVsMovingAverage(100, 100)).toBe("At");
+    expect(priceVsMovingAverage(null, 100)).toBe("Data unavailable");
+  });
+
   it("scores a qualifying value screen highly", () => {
     const filters = evaluateRegionalFilters({
       region: "USA",
@@ -54,11 +76,18 @@ describe("recommendation scoring", () => {
     });
 
     expect(scoreValueScreen({ percentFromLow: 5, trailingPe: 9, filters })).toBe(100);
+    expect(scoreValueScreen({ percentFromLow: null, trailingPe: null, filters })).toBe(30);
   });
 
   it("labels strong and weak momentum", () => {
     expect(momentumSignal(strongMetrics).signal).toBe("Bullish");
     expect(momentumSignal(weakMetrics).signal).toBe("Weak");
+    expect(scoreMomentum(strongMetrics)).toBeGreaterThan(scoreMomentum(weakMetrics));
+    expect(momentumSignal({ ...weakMetrics, performance5D: null, roc14: null, roc21: null, latestClose: null, ma20: null, ma50: null, rsi14: null })).toEqual({
+      signal: "Data unavailable",
+      outlook: "Data unavailable",
+      confidence: 0
+    });
   });
 
   it("penalizes unavailable source records and warnings", () => {

@@ -15,6 +15,7 @@
 - Hosted alert worker readiness.
 - GitHub repo with documentation and issue/PR templates.
 - Cloud database schema, adapter contract, and readiness validation.
+- QA hardening with expanded unit/e2e coverage, System guide workspace, and test report.
 
 ## Next Priority
 
@@ -63,6 +64,10 @@ Improve:
 - Peer discovery
 - Official-source ranking
 - Source freshness and warning clarity
+
+### 6. Build Warning Cleanup
+
+Resolve the non-fatal Turbopack output-file-tracing warning caused by local filesystem workspace storage before hosted production launch.
 
 ## Later
 

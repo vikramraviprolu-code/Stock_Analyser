@@ -1070,6 +1070,14 @@ button.mini,
   text-transform: uppercase;
 }
 
+.system-guide-grid p {
+  min-height: 126px;
+}
+
+.system-warning-grid {
+  margin-top: 12px;
+}
+
 .fundamental-grid,
 .report-grid,
 .report-columns {
