@@ -16,6 +16,53 @@ For every meaningful code or product change, add a new entry with:
 - Verification performed
 - Follow-up notes, if any
 
+## 2026-05-02 - Version 2.5.0 Cloud Database Foundation
+
+### Summary
+
+Added the cloud database foundation for the next production-readiness milestone. The app now has cloud workspace readiness validation, PostgreSQL URL detection, sanitized database URL reporting, a workspace adapter contract, a cloud adapter placeholder, and a PostgreSQL migration for tenant-isolated workspace data with row-level security policies.
+
+### Why
+
+The recommended next step was the Cloud Database Adapter. We do not have live database credentials in this workspace, so this version prepares the schema, contracts, checks, and docs without pretending the app is already using cloud storage. Runtime workspace traffic remains on local encrypted JSON until the database client and migration flow are implemented and verified.
+
+### Key Files Touched
+
+- `src/lib/cloud-workspace.ts`
+- `src/lib/workspace-adapter.ts`
+- `src/lib/cloud-workspace-adapter.ts`
+- `src/lib/types.ts`
+- `src/lib/version.ts`
+- `src/components/StockAnalyser.tsx`
+- `app/api/system/readiness/route.ts`
+- `database/migrations/0001_cloud_workspace.sql`
+- `docs/CLOUD_DATABASE_ADAPTER.md`
+- `docs/ARCHITECTURE.md`
+- `docs/DEPLOYMENT.md`
+- `docs/ROADMAP.md`
+- `README.md`
+- `tests/cloud-workspace.test.ts`
+- `VERSION_HISTORY.md`
+- `CHANGE_HISTORY.md`
+
+### Verification
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm test`
+- `npm run build`
+- `npm run test:e2e`
+- `npm audit --audit-level=moderate`
+- Live smoke: `GET /api/system/readiness` now returns cloud schema version, migration path, missing env, and sanitized database URL fields.
+- Secret-pattern scan over committed files showed no local certs, keys, tokens, or environment secrets.
+- `git diff --check`
+
+### Follow-Up
+
+- Add a production PostgreSQL client and implement `WorkspaceAdapter` reads/writes.
+- Add a migration command from local encrypted JSON to cloud rows.
+- Add rollback and restore tests before enabling cloud workspace traffic.
+
 ## 2026-05-02 - Repository Documentation Template
 
 ### Summary

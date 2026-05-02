@@ -14,12 +14,13 @@
 - Page-active scheduled alerts.
 - Hosted alert worker readiness.
 - GitHub repo with documentation and issue/PR templates.
+- Cloud database schema, adapter contract, and readiness validation.
 
 ## Next Priority
 
-### 1. Cloud Database Adapter
+### 1. Cloud Database Runtime
 
-Replace local encrypted JSON with tenant-isolated hosted storage for:
+Implement the database client and migration workflow that moves local encrypted JSON to tenant-isolated hosted storage for:
 
 - Users
 - Watchlists
@@ -27,6 +28,8 @@ Replace local encrypted JSON with tenant-isolated hosted storage for:
 - Alert rules, events, notifications, scheduler runs
 - Consent history
 - Audit events
+
+The schema foundation is in `database/migrations/0001_cloud_workspace.sql`; runtime traffic remains local until the cloud adapter is implemented and verified.
 
 ### 2. Production Auth
 

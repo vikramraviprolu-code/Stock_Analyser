@@ -28,6 +28,7 @@ flowchart LR
 | Indicators | `src/lib/indicators.ts` | MA, RSI, ROC, 52-week metrics |
 | Recommendation | `src/lib/recommendation.ts` | Transparent value, momentum, and data quality scoring |
 | Workspace | `src/lib/workspace-store.ts` | Encrypted local watchlist, portfolio, alerts, privacy, audit data |
+| Cloud workspace foundation | `src/lib/cloud-workspace.ts`, `database/migrations/` | Cloud readiness, schema versioning, and database migration target |
 | Auth | `src/lib/auth.ts` | Local encrypted auth and signed session cookies |
 | Security | `src/lib/security.ts`, `proxy.ts` | Headers, CSRF-style mutation checks, rate limits |
 | Alerts | `src/lib/alert-engine.ts` | Rule evaluation, notifications, scheduler runs |
@@ -50,6 +51,8 @@ The current implementation is local-first:
 - Encryption: AES-256-GCM envelope with local key file or environment secret
 
 This shape is intentionally provider-ready. A cloud adapter should preserve the same domain contracts while replacing local encrypted files with tenant-isolated storage.
+
+The current cloud database target is PostgreSQL schema v1 in `database/migrations/0001_cloud_workspace.sql`, documented in `docs/CLOUD_DATABASE_ADAPTER.md`.
 
 ## Alert Model
 

@@ -2181,6 +2181,7 @@ function PrivacyPanel({
         </div>
         <div className="metric-grid four">
           <MetricCard label="Cloud sync" value={cloudSync?.configured ? "Configured" : "Local adapter"} subvalue={cloudSync?.detail ?? "Readiness status unavailable"} />
+          <MetricCard label="Database driver" value={cloudSync?.driver ?? DATA_UNAVAILABLE} subvalue={cloudSync?.migrationPath ? `Schema v${cloudSync.schemaVersion} · ${cloudSync.migrationPath}` : "Migration status unavailable"} />
           <MetricCard label="Hosted worker" value={hostedWorker?.configured ? "Armed" : "Not configured"} subvalue={hostedWorker?.detail ?? "Readiness status unavailable"} />
           <MetricCard label="Worker endpoint" value={hostedWorker?.endpoint ? "/api/alerts/worker" : DATA_UNAVAILABLE} subvalue={hostedWorker?.auth ?? "Bearer secret"} />
           <MetricCard label="GDPR controls" value={readiness?.gdpr.exportEnabled && readiness.gdpr.deleteEnabled ? "Enabled" : DATA_UNAVAILABLE} subvalue="Export, erasure, consent history, audit trail" />

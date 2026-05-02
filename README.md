@@ -8,8 +8,8 @@ The app uses free public sources, keeps unavailable metrics explicit as `Data un
 
 ## Current Version
 
-- App version: `2.4.0`
-- Codename: `Hosted Worker Readiness`
+- App version: `2.5.0`
+- Codename: `Cloud Database Foundation`
 - Release log: [VERSION_HISTORY.md](VERSION_HISTORY.md)
 - Implementation log: [CHANGE_HISTORY.md](CHANGE_HISTORY.md)
 
@@ -82,6 +82,7 @@ docs/                    Architecture, deployment, operations, and roadmap docs
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
+- [Cloud Database Adapter](docs/CLOUD_DATABASE_ADAPTER.md)
 - [Deployment](docs/DEPLOYMENT.md)
 - [Operations](docs/OPERATIONS.md)
 - [Roadmap](docs/ROADMAP.md)

@@ -468,8 +468,14 @@ export interface DeploymentReadinessResponse {
   cloudSync: {
     configured: boolean;
     provider: "local-encrypted-json" | "cloud";
+    driver: "postgres" | "unknown";
+    schemaVersion: number;
+    migrationPath: string;
     requiredEnv: string[];
+    missingEnv: string[];
+    sanitizedDatabaseUrl: string | null;
     detail: string;
+    warnings: string[];
   };
   hostedWorker: {
     configured: boolean;

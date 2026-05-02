@@ -1,33 +1,32 @@
 import { NextResponse } from "next/server";
+import { cloudWorkspaceReadiness } from "@/src/lib/cloud-workspace";
 import { workerSecretStatus } from "@/src/lib/security";
 import type { DeploymentReadinessResponse } from "@/src/lib/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function cloudSyncConfigured(): boolean {
-  const provider = process.env.STOCK_ANALYSER_WORKSPACE_PROVIDER?.trim().toLowerCase();
-  const databaseUrl = process.env.STOCK_ANALYSER_DATABASE_URL?.trim();
-  return provider === "cloud" && Boolean(databaseUrl);
-}
-
 export async function GET() {
   const workerSecret = workerSecretStatus();
-  const cloudReady = cloudSyncConfigured();
+  const cloud = cloudWorkspaceReadiness();
   const warnings = [
-    ...(cloudReady ? [] : ["Cloud sync is not connected yet. Local encrypted JSON remains the active workspace store."]),
+    ...cloud.warnings,
     ...(workerSecret.warning ? [workerSecret.warning] : [])
   ];
   const response: DeploymentReadinessResponse = {
     mode: "deployment-readiness",
     retrievedAt: new Date().toISOString(),
     cloudSync: {
-      configured: cloudReady,
-      provider: cloudReady ? "cloud" : "local-encrypted-json",
-      requiredEnv: ["STOCK_ANALYSER_WORKSPACE_PROVIDER=cloud", "STOCK_ANALYSER_DATABASE_URL"],
-      detail: cloudReady
-        ? "Cloud workspace provider flags are present. Verify managed encryption, row-level access control, backups, and data-processing terms before launch."
-        : "The app is still using the local encrypted workspace adapter. This is suitable for local development, not hosted multi-user sync."
+      configured: cloud.configured,
+      provider: cloud.provider,
+      driver: cloud.driver,
+      schemaVersion: cloud.schemaVersion,
+      migrationPath: cloud.migrationPath,
+      requiredEnv: cloud.requiredEnv,
+      missingEnv: cloud.missingEnv,
+      sanitizedDatabaseUrl: cloud.sanitizedDatabaseUrl,
+      detail: cloud.detail,
+      warnings: cloud.warnings
     },
     hostedWorker: {
       configured: workerSecret.configured,

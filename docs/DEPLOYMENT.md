@@ -32,7 +32,7 @@ https://stockanalyser.app:3443
 
 Before hosted multi-user deployment:
 
-- Replace local encrypted JSON workspace storage with a cloud database.
+- Implement and enable the cloud workspace adapter against a managed PostgreSQL database.
 - Replace local passphrase auth with a production identity provider.
 - Configure managed TLS through the hosting provider.
 - Configure hosted scheduler/cron for `/api/alerts/worker`.
@@ -46,11 +46,27 @@ Before hosted multi-user deployment:
 | `STOCK_ANALYSER_WORKSPACE_KEY` | Optional local workspace encryption secret override | Local hardened operation |
 | `STOCK_ANALYSER_AUTH_KEY` | Optional local auth/session secret override | Local hardened operation |
 | `STOCK_ANALYSER_WORKER_SECRET` | Bearer secret for hosted alert worker, minimum 32 chars | Hosted scheduler |
-| `STOCK_ANALYSER_WORKSPACE_PROVIDER=cloud` | Future cloud storage provider flag | Production cloud sync |
-| `STOCK_ANALYSER_DATABASE_URL` | Future managed database connection | Production cloud sync |
+| `STOCK_ANALYSER_WORKSPACE_PROVIDER=cloud` | Enables cloud workspace readiness mode | Production cloud sync |
+| `STOCK_ANALYSER_DATABASE_URL` | PostgreSQL connection URL for the future cloud adapter | Production cloud sync |
 | `STOCK_ANALYSER_DATA_DIR` | Optional local data directory override | Local filesystem adapter |
 
 Never commit environment files.
+
+## Cloud Database Foundation
+
+The current migration target is PostgreSQL:
+
+```text
+database/migrations/0001_cloud_workspace.sql
+```
+
+More detail:
+
+```text
+docs/CLOUD_DATABASE_ADAPTER.md
+```
+
+The readiness API reports cloud sync as configured only when the provider flag and a PostgreSQL-compatible database URL are present. Runtime workspace traffic remains on local encrypted JSON until the database client implementation and migration path are complete.
 
 ## Build And Test
 

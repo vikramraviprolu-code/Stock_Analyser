@@ -4,6 +4,16 @@ This file is the durable project memory for product/version changes. Update it w
 
 For implementation-level details, files touched, rationale, and verification notes, maintain `CHANGE_HISTORY.md`.
 
+## 2.5.0 - Cloud Database Foundation - 2026-05-02
+
+- Added cloud workspace readiness validation with PostgreSQL URL detection, required env checks, schema versioning, and sanitized database URL reporting.
+- Added a provider-shaped workspace adapter contract and cloud adapter placeholder so local encrypted storage can be swapped without changing app workflows.
+- Added PostgreSQL migration `database/migrations/0001_cloud_workspace.sql` for workspace owners, workspace items, audit log, schema migrations, indexes, and row-level security policies.
+- Extended deployment readiness output and Privacy workspace readiness cards with database driver, schema version, migration path, missing env, and cloud warnings.
+- Added Cloud Database Adapter documentation covering env setup, migration, tenant isolation, and next implementation step.
+- Added unit coverage for cloud readiness, PostgreSQL URL validation, and credential redaction.
+- Verified with typecheck, lint, unit tests, production build, Playwright e2e, dependency audit, live readiness API smoke testing, secret-pattern scan, and diff check.
+
 ## 2.4.0 - Hosted Worker Readiness - 2026-05-02
 
 - Added a protected `/api/alerts/worker` endpoint for hosted schedulers to run scheduled alert checks across discovered workspace owners.
