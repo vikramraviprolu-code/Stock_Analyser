@@ -2,7 +2,7 @@
 
 Date: 2026-05-02
 
-App version: 2.6.0
+App version: 2.6.1
 
 Scope: QA hardening for core calculations, public API health/security behavior, workspace navigation, button/control availability, validation states, and the new System guide workspace.
 
@@ -11,6 +11,8 @@ Scope: QA hardening for core calculations, public API health/security behavior, 
 Result: Passed with one documented build warning.
 
 The QA pass expanded automated coverage across pure calculation helpers, source/trust helpers, symbol metadata, form accessibility, workspace navigation, button/control states, and API readiness/security boundaries. The app now also includes an in-app System guide and a repo-level user guide.
+
+CI update: v2.6.1 fixed the GitHub Actions `npm ci` failure by syncing the lockfile and adding a patched PostCSS override.
 
 ## Automated Test Matrix
 

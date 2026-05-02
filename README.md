@@ -8,8 +8,8 @@ The app uses free public sources, keeps unavailable metrics explicit as `Data un
 
 ## Current Version
 
-- App version: `2.6.0`
-- Codename: `QA and System Guide`
+- App version: `2.6.1`
+- Codename: `CI Dependency Lock Fix`
 - Release log: [VERSION_HISTORY.md](VERSION_HISTORY.md)
 - Implementation log: [CHANGE_HISTORY.md](CHANGE_HISTORY.md)
 

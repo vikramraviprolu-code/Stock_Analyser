@@ -16,6 +16,46 @@ For every meaningful code or product change, add a new entry with:
 - Verification performed
 - Follow-up notes, if any
 
+## 2026-05-02 - Version 2.6.1 CI Dependency Lock Fix
+
+### Summary
+
+Fixed the GitHub Actions CI failure where the `verify` job stopped at `npm ci`. The lockfile was missing the exact nested `postcss@8.4.31` dependency required by Next's package metadata under npm 11, and adding that dependency directly would reintroduce a moderate PostCSS advisory. The fix adds an npm override to use the already-patched `postcss@8.5.12` and regenerates the lockfile.
+
+### Why
+
+GitHub Actions run `25259952154` failed in the `Install dependencies` step with:
+
+- `npm ci` can only install packages when package.json and package-lock.json are in sync.
+- `Missing: postcss@8.4.31 from lock file`.
+
+After regenerating the lockfile without an override, `npm audit --audit-level=moderate` failed because `postcss@8.4.31` is vulnerable. The override keeps CI clean and avoids accepting the vulnerable nested dependency.
+
+### Key Files Touched
+
+- `package.json`
+- `package-lock.json`
+- `src/lib/version.ts`
+- `README.md`
+- `VERSION_HISTORY.md`
+- `CHANGE_HISTORY.md`
+
+### Verification
+
+- Fetched GitHub Actions job details and logs for run `25259952154`, job `74067286411`.
+- `npm ci --ignore-scripts`
+- `npm run typecheck`
+- `npm run lint`
+- `npm test` - 14 files, 61 tests passed
+- `npm run build` - passed with the known non-fatal Turbopack NFT tracing warning for local filesystem workspace storage
+- `npm run test:e2e` - 14 tests passed across desktop and mobile projects
+- `npm audit --audit-level=moderate` - 0 vulnerabilities
+- `git diff --check`
+
+### Follow-Up
+
+- GitHub Actions should pass on the next push. Re-run failed jobs only if GitHub does not automatically start a new run.
+
 ## 2026-05-02 - Version 2.6.0 QA and System Guide
 
 ### Summary

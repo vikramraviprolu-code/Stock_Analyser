@@ -4,6 +4,13 @@ This file is the durable project memory for product/version changes. Update it w
 
 For implementation-level details, files touched, rationale, and verification notes, maintain `CHANGE_HISTORY.md`.
 
+## 2.6.1 - CI Dependency Lock Fix - 2026-05-02
+
+- Fixed GitHub Actions failing at `npm ci` because `package.json` and `package-lock.json` were out of sync for Next's PostCSS dependency.
+- Added an npm override for `postcss@8.5.12` to avoid the vulnerable nested `postcss@8.4.31` pulled by Next's pinned dependency metadata.
+- Regenerated the lockfile so clean installs work with npm 11 on GitHub Actions.
+- Verified with `npm ci --ignore-scripts`, typecheck, lint, unit tests, production build, Playwright e2e, dependency audit, and diff check.
+
 ## 2.6.0 - QA and System Guide - 2026-05-02
 
 - Added a System workspace with an in-app user guide, trust rules, deployment readiness cards, security/GDPR checklist, and repo documentation pointers.
